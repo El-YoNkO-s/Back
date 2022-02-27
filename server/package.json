@@ -4,7 +4,7 @@
   "description": "app",
   "main": "index.js",
   "scripts": {
-    "start": " server/index.js"
+    "start": " nodemon server/index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

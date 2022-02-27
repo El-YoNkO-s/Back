@@ -58,6 +58,12 @@ CREATE TABLE Chats(
   FOREIGN KEY (id_Message) REFERENCES Message(id_Message)
 );
 
+Create TABLE comments(
+  id int NOT NULL AUTO_INCREMENT,
+  des varchar(350) NOT NULL,
+  PRIMARY KEY (ID)
+);
+
 /*  Execute this file from the command line by typing:
  *    mysql -u root -p < server/database-mysql/schema.sql
  *  to create the database and the tables.*/

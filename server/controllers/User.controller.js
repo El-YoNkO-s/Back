@@ -22,6 +22,23 @@ const signUp = async function (req, res) {
         }
     })
 }
+const signIn = function (req, res) {
+    // var params ={
+    //     email: req.body.email,
+    //     password: pass,
+    // }
+    var getInfo = "SELECT * FROM users WHERE email = ? AND password = ?"
+
+    db.query(getInfo,params,(err,result)=>{
+        if(err) {
+            res.send(err);
+        }if (result.length > 0) {
+            res.send(result);
+        }else {
+            console.log("wrong email or password")
+        }
+    })
+}
 
 
 
@@ -29,4 +46,4 @@ const signUp = async function (req, res) {
 
 
 
-module.exports = { signUp };
+module.exports = { signUp,signIn };
