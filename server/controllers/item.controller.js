@@ -6,15 +6,15 @@
 // var Item = require('../database-mongo/Item.model.js');
 
 
-var selectAll = function (req, res) {
-  db.query("SELECT * FROM items", (err, items, fields) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(items);
-    }
-  });
-};
+// var selectAll = function (req, res) {
+//   db.query("SELECT * FROM items", (err, items, fields) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } else {
+//       res.status(200).send(items);
+//     }
+//   });
+// };
 
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES
 // var selectAll = function (req, res) {
@@ -37,4 +37,4 @@ var selectAll = function (req, res) {
 //   }
 // };
 
-module.exports = { selectAll };
+module.exports = {  };
