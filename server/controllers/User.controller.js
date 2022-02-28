@@ -1,49 +1,68 @@
 var db = require("../database-mysql")
 const bcrypt = require("bcrypt");
-const signUp = async function (req, res) {
-    var salt = await bcrypt.genSalt();
-    var pass = await bcrypt.hash(req.body.password, salt);
-    var insertsql = "INSERT INTO User SET ?";
-    var params = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        birthday: req.body.birthday,
-        categorie: req.body.categorie,
-        password: pass,
-        phone_number: req.body.phone_number,
 
-    }
-    db.query(insertsql, params, (err, result) => {
+
+
+const register = function (req, res) {
+    var sql = 'SELECT * FROM User WHERE LOWER(email) = LOWER(?)'
+    console.log(req.body)
+    db.query(sql, [req.body.email], (err, result) => {
         if (err) {
-            res.send(err)
+            console.log('ena');
+            res.status(500).send(err)
         } else {
-            res.send(result)
+            if (result.length) {
+                res.status(200).send("This user is already in use!");
+            } else
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    var params = {
+                        username:req.body.username,
+                        email:req.body.email,
+                        password: hash,
+                        phone_number:req.body.phoneNumber,
+                        categorie:req.body.categorie,
+                        birthday:req.body.birthday
+                    }
+                    console.log(params)
+                    db.query(`INSERT INTO User Set ? `
+                        , params, (err, result) => {
+                            if (err) {
+                                throw err
+                            } else {
+                                res.status(201).send("The user has been registerd with us!")
+                            }
+                        })
+                })
         }
+
     })
 }
-const signIn = function (req, res) {
-    // var params ={
-    //     email: req.body.email,
-    //     password: pass,
-    // }
-    var getInfo = "SELECT * FROM users WHERE email = ? AND password = ?"
 
-    db.query(getInfo,params,(err,result)=>{
-        if(err) {
+const login = (req, res, next) => {
+    var params = {
+        email:req.body.email,
+        password:req.body.password
+    }
+    sql = 'SELECT * FROM User WHERE email =?'
+    db.query(sql,[req.body.email] , (err, result) => { // user does not exists
+        if (err) {
             res.send(err);
-        }if (result.length > 0) {
-            res.send(result);
-        }else {
-            console.log("wrong email or password")
+        } else{
+            if (!result.length) {
+                res.send("Email or password is incorrect!");
+            } else {
+                bcrypt.compare(params.password, result[0]["password"], (bErr, bResult) => { // wrong password
+                        if (bResult) {
+                            res.send(result[0]);
+                        } else {
+                            res.send("Username or password is incorrect!");
+                        }
+                })
+            }
         }
-    })
-}
+         
+    });
+};
 
+module.exports={register,login}
 
-
-
-
-
-
-module.exports = { signUp,signIn };

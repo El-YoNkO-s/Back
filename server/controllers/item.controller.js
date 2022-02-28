@@ -6,6 +6,9 @@
 // var Item = require('../database-mongo/Item.model.js');
 
 
+
+
+
 var commits = (req, res) => {
   var commsql = "INSERT INTO comments SET ? ";
   var params = {
