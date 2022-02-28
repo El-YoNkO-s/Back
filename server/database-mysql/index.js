@@ -4,7 +4,7 @@ var db = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'root',
-  database : ' CineCast'
+  database : 'CineCast'
 });
 db.connect(() => {
   console.log("Database Connected ");
