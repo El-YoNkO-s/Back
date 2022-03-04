@@ -15,5 +15,15 @@ var insertPost = function (req, res) {
         }
     })
 }
+var getpost = (req, res) => {
+    var post = "SELECT * FROM Posts "
+    db.query(post,(err, results) => {
+        if(err){
+            res.send(err)
+        }else{
+            res.send(results)
+        }
+    })
+}
 
-module.exports = { insertPost };
+module.exports = { insertPost,getpost };

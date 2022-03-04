@@ -16,12 +16,12 @@ const register = function (req, res) {
             } else
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     var params = {
-                        username:req.body.username,
-                        email:req.body.email,
+                        username: req.body.username,
+                        email: req.body.email,
                         password: hash,
-                        phone_number:req.body.phoneNumber,
-                        categorie:req.body.categorie,
-                        birthday:req.body.birthday
+                        phone_number: req.body.phoneNumber,
+                        categorie: req.body.categorie,
+                        birthday: req.body.birthday
                     }
                     console.log(params)
                     db.query(`INSERT INTO User Set ? `
@@ -40,29 +40,41 @@ const register = function (req, res) {
 
 const login = (req, res, next) => {
     var params = {
-        email:req.body.email,
-        password:req.body.password
+        email: req.body.email,
+        password: req.body.password
     }
     sql = 'SELECT * FROM User WHERE email =?'
-    db.query(sql,[req.body.email] , (err, result) => { // user does not exists
+    db.query(sql, [req.body.email], (err, result) => { // user does not exists
         if (err) {
             res.send(err);
-        } else{
+        } else {
             if (!result.length) {
                 res.send("Email or password is incorrect!");
             } else {
                 bcrypt.compare(params.password, result[0]["password"], (bErr, bResult) => { // wrong password
-                        if (bResult) {
-                            res.send(result[0]);
-                        } else {
-                            res.send("Username or password is incorrect!");
-                        }
+                    if (bResult) {
+                        res.send(result[0]);
+                    } else {
+                        res.send("Username or password is incorrect!");
+                    }
                 })
             }
         }
-         
+
     });
 };
+var selectProfile = function (req, res) {
+    var params = req.params.id
+    sql = "SELECT username,birthday,phone_number,email,categorie FROM User WHERE id_User = ?"
+    db.query(sql, [params], (err, items, fields) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(items);
+      }
+    });
+  };
+  
 
-module.exports={register,login}
+module.exports = { register, login,selectProfile }
 
