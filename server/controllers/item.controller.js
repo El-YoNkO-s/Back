@@ -25,9 +25,9 @@ var commits = (req, res) => {
   });
 };
 var getcommit = (req, res) => {
-  console.log(req.body.id);
+  var params = req.params.id_Post
   var getcommit ="SELECT * FROM comments WHERE id_Post = ?";
-  db.query(getcommit,[req.body.id_Post],(err, result) => {
+  db.query(getcommit,params,(err, result) => {
     if (err) {
       console.log(err);
     } else {
