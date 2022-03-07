@@ -8,7 +8,7 @@ const register = function (req, res) {
     console.log(req.body)
     db.query(sql, [req.body.email], (err, result) => {
         if (err) {
-            console.log('ena');
+            console.log('ok');
             res.status(500).send(err)
         } else {
             if (result.length) {
@@ -19,9 +19,11 @@ const register = function (req, res) {
                         username:req.body.username,
                         email:req.body.email,
                         password: hash,
-                        phone_number:req.body.phoneNumber,
+                        phone_number:req.body.phone_number,
                         categorie:req.body.categorie,
-                        birthday:req.body.birthday
+                        birthday:req.body.birthday,
+                        picture:req.body.picture,
+
                     }
                     console.log(params)
                     db.query(`INSERT INTO User Set ? `
@@ -29,7 +31,7 @@ const register = function (req, res) {
                             if (err) {
                                 throw err
                             } else {
-                                res.status(201).send("The user has been registerd with us!")
+                                res.status(201).send(result[0])
                             }
                         })
                 })
@@ -55,7 +57,7 @@ const login = (req, res, next) => {
                         if (bResult) {
                             res.send(result[0]);
                         } else {
-                            res.send("Username or password is incorrect!");
+                            res.send("Email or password is incorrect!");
                         }
                 })
             }
@@ -63,5 +65,17 @@ const login = (req, res, next) => {
          
     });
 };
+const getUserInfo = (req, res) => { // const id=req.params.id
+    console.log(req.params.id_User)
+        const userInfo = `SELECT * FROM User WHERE id_User = ${req.params[`id_User`]}`;
+        db.query(userInfo, (err, data) => {
+            if (err) {
+                res.send(err);
+                console.log(err)
+            } else {
+                res.send(data);
+            }
+        });
+    };
 
-module.exports={register,login}
+module.exports={register,login,getUserInfo}
