@@ -2,11 +2,5 @@ var router =require("express").Router();
 const controllers = require("../controllers/User.controller")
 router.post("/register", controllers.register)
 router.post("/login",controllers.login)
-// =======
-// const router =require("express").Router();
-// const controllers = require("../controllers/User.controller")
-// router.post("/signUp",controllers.signUp)
-// router.post("/signIn",controllers.signUp)
-
-// >>>>>>> main
+router.get("/info/:id_User",controllers.getUserInfo)
 module.exports =router
