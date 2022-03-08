@@ -13,6 +13,7 @@ var commits = (req, res) => {
   var commsql = "INSERT INTO comments SET ? ";
   var params = {
     des: req.body.des,
+    id_Post: req.body.id_Post
   };
   console.log(params)
   db.query(commsql, [params], (err, result) => {
@@ -24,9 +25,9 @@ var commits = (req, res) => {
   });
 };
 var getcommit = (req, res) => {
-  console.log(req.body);
-  var getcommit = "SELECT * FROM comments";
-  db.query(getcommit,(err, result) => {
+  var params = req.params.id_Post
+  var getcommit ="SELECT * FROM comments WHERE id_Post = ?";
+  db.query(getcommit,params,(err, result) => {
     if (err) {
       console.log(err);
     } else {
