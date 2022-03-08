@@ -25,5 +25,17 @@ var getpost = (req, res) => {
         }
     })
 }
+const getPostid = (req, res) => { // const id=req.params.id
+    console.log(req.params.id_User)
+        const userInfo = `SELECT * FROM Posts WHERE id_Post = ${req.params[`id_Post`]}`;
+        db.query(userInfo, (err, data) => {
+            if (err) {
+                res.send(err);
+                console.log(err)
+            } else {
+                res.send(data);
+            }
+        });
+    };
 
-module.exports = { insertPost,getpost };
+module.exports = { insertPost,getpost,getPostid };

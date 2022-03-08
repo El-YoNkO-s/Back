@@ -12,10 +12,9 @@ CREATE TABLE User (
   categorie VARCHAR(200),
   password VARCHAR(200),
   phone_number int,
-  picture VARCHAR(200),
+  picture VARCHAR(900),
   posts VARCHAR(500),
   videos JSON,
-  pictures JSON,
   likes int,
   PRIMARY KEY (id_User)
 );
