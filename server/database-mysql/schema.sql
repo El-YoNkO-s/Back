@@ -6,24 +6,22 @@ USE CineCast;
 
 CREATE TABLE User (
   id_User int AUTO_INCREMENT,
-  firstName VARCHAR(200),
-  lastName VARCHAR(200),
+  username VARCHAR(200),
   email VARCHAR(200),
   birthday VARCHAR(200),
   categorie VARCHAR(200),
   password VARCHAR(200),
   phone_number int,
-  picture VARCHAR(200),
+  picture VARCHAR(900),
   posts VARCHAR(500),
   videos JSON,
-  pictures JSON,
   likes int,
   PRIMARY KEY (id_User)
 );
 
 CREATE TABLE Posts (
-  id_Post int AUTO_INCREMENT,
   id_User int,
+  id_Post int AUTO_INCREMENT,
   post VARCHAR(500),
   video VARCHAR(500),
   picture VARCHAR(500),
@@ -42,8 +40,8 @@ CREATE TABLE Review(
 CREATE TABLE Message(
   id_Message int AUTO_INCREMENT,
   id_User int,
-  message VARCHAR(500),
-  time date,
+  user_message VARCHAR(500),
+  message_time date,
   PRIMARY KEY (id_Message),
   FOREIGN KEY (id_User) REFERENCES User(id_User)
 );
@@ -61,7 +59,9 @@ CREATE TABLE Chats(
 Create TABLE comments(
   id int NOT NULL AUTO_INCREMENT,
   des varchar(350) NOT NULL,
-  PRIMARY KEY (ID)
+  id_Post int,
+  FOREIGN KEY (id_Post) REFERENCES Posts(id_Post),
+  PRIMARY KEY (id)
 );
 
 /*  Execute this file from the command line by typing:

@@ -1,6 +1,6 @@
-const router =require("express").Router();
+var router =require("express").Router();
 const controllers = require("../controllers/User.controller")
-router.post("/signUp",controllers.signUp)
-router.post("/signIn",controllers.signUp)
-
+router.post("/register", controllers.register)
+router.post("/login",controllers.login)
+router.get("/info/:id_User",controllers.getUserInfo)
 module.exports =router
