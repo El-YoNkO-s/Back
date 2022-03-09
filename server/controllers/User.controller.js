@@ -16,8 +16,8 @@ const register = function (req, res) {
             } else
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     var params = {
-                        username:req.body.username,
-                        email:req.body.email,
+                        username: req.body.username,
+                        email: req.body.email,
                         password: hash,
                         phone_number:req.body.phone_number,
                         categorie:req.body.categorie,
@@ -42,14 +42,14 @@ const register = function (req, res) {
 
 const login = (req, res, next) => {
     var params = {
-        email:req.body.email,
-        password:req.body.password
+        email: req.body.email,
+        password: req.body.password
     }
     sql = 'SELECT * FROM User WHERE email =?'
-    db.query(sql,[req.body.email] , (err, result) => { // user does not exists
+    db.query(sql, [req.body.email], (err, result) => { // user does not exists
         if (err) {
             res.send(err);
-        } else{
+        } else {
             if (!result.length) {
                 res.send("Email or password is incorrect!");
             } else {
@@ -62,7 +62,7 @@ const login = (req, res, next) => {
                 })
             }
         }
-         
+
     });
 };
 const getUserInfo = (req, res) => { // const id=req.params.id
