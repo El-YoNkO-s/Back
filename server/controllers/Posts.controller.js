@@ -25,6 +25,16 @@ var getpost = (req, res) => {
         }
     })
 }
+var getpostusername = (req, res) => {
+    var postUSER = "SELECT Posts.*, User.username FROM Posts INNER JOIN User ON Posts.id_User = User.id_User "
+    db.query(postUSER,(err, results) => {
+        if(err){
+            res.send(err)
+        }else{
+            res.send(results)
+        }
+    })
+}
 const getPostid = (req, res) => { // const id=req.params.id
     console.log(req.params.id_User)
         const userInfo = `SELECT * FROM Posts WHERE id_Post = ${req.params[`id_Post`]}`;
@@ -50,4 +60,4 @@ const getPostid = (req, res) => { // const id=req.params.id
             });
         };
 
-module.exports = { insertPost,getpost,getPostid,getUserPost };
+module.exports = { insertPost,getpost,getPostid,getpostusername,getUserPost };

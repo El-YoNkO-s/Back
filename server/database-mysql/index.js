@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'ih3b2000A',
   database: 'CineCast'
 });
 db.connect(function (err) {
