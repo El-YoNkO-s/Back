@@ -35,5 +35,26 @@ var getcommit = (req, res) => {
     }
   });
 };
+var insertcommit = (req, res) => {
+  var params = {id_Post:req.body.id_Post,des:req.body.des}
+  var getcommit ="Insert INTO comments SET ?";
+  db.query(getcommit,params,(err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+};
+var getpostcomment = (req, res) => {
+  var postUSER = "SELECT Posts.*, comments.des FROM Posts INNER JOIN comments ON Posts.id_Post = comments.id_Post "
+  db.query(postUSER,(err, results) => {
+      if(err){
+          res.send(err)
+      }else{
+          res.send(results)
+      }
+  })
+}
 
-module.exports = { commits,getcommit};
+module.exports = { commits,getcommit,getpostcomment,insertcommit};
