@@ -19,10 +19,10 @@ const register = function (req, res) {
                         username: req.body.username,
                         email: req.body.email,
                         password: hash,
-                        phone_number:req.body.phone_number,
-                        categorie:req.body.categorie,
-                        birthday:req.body.birthday,
-                        picture:req.body.picture,
+                        phone_number: req.body.phone_number,
+                        categorie: req.body.categorie,
+                        birthday: req.body.birthday,
+                        picture: req.body.picture,
 
                     }
                     console.log(params)
@@ -54,11 +54,11 @@ const login = (req, res, next) => {
                 res.send("Email or password is incorrect!");
             } else {
                 bcrypt.compare(params.password, result[0]["password"], (bErr, bResult) => { // wrong password
-                        if (bResult) {
-                            res.send(result[0]);
-                        } else {
-                            res.send("Email or password is incorrect!");
-                        }
+                    if (bResult) {
+                        res.send(result[0]);
+                    } else {
+                        res.send("Email or password is incorrect!");
+                    }
                 })
             }
         }
@@ -67,15 +67,48 @@ const login = (req, res, next) => {
 };
 const getUserInfo = (req, res) => { // const id=req.params.id
     console.log(req.params.id_User)
-        const userInfo = `SELECT * FROM User WHERE id_User = ${req.params[`id_User`]}`;
-        db.query(userInfo, (err, data) => {
-            if (err) {
-                res.send(err);
-                console.log(err)
-            } else {
-                res.send(data);
-            }
-        });
-    };
+    const userInfo = `SELECT * FROM User WHERE id_User = ${req.params[`id_User`]}`;
+    db.query(userInfo, (err, data) => {
+        if (err) {
+            res.send(err);
+            console.log(err)
+        } else {
+            res.send(data);
+        }
+    });
+};
+const selectall = (req, res) => { // const id=req.params.id
+    const userInfo = "SELECT * FROM User";
+    db.query(userInfo, (err, data) => {
+        if (err) {
+            res.send(err);
+            console.log(err)
+        } else {
+            res.send(data);
+        }
+    });
+};
+const deleteuser = (req, res) =>{
+    var deleteuser = `DELETE FROM User WHERE id_User = ${req.params[`id_User`]}`
+    db.query(deleteuser, (err, data) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send(data);
+        }
+    })
+}
+const selectalluserinfo = (req, res) =>{
+    var id=req.params.id_User
+    var deleteuser = "delete from User where id_User =?"
+    db.query(deleteuser, (err, data) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send(data);
+        }
+    })
+}
 
-module.exports={register,login,getUserInfo}
+
+module.exports = { register, login, getUserInfo, selectall,deleteuser,selectalluserinfo}

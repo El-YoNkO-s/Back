@@ -32,5 +32,5 @@ app.use("/api/user", user)
 // >>>>>>> main
 
 app.listen(PORT, function () {
-  console.log("listening on port 3000!");
+  console.log("listening on port 3001!");
 });
